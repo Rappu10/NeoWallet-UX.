@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoWallet - Registro</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; }
+        
+        /* Controles de Simulación */
+        .simulation-controls { background: #333; color: white; padding: 15px; width: 100%; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .toggle-btn { background: #ff4757; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        .toggle-btn.active { background: #2ed573; }
+
+        /* Contenedor Principal */
+        .phone-container { width: 360px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; position: relative; min-height: 600px; }
+        h2 { text-align: center; color: #2c3e50; }
+        
+        /* Estilos Generales de Inputs */
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button.submit { width: 100%; padding: 15px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        
+        /* VERSIÓN MALA (Sin UX) */
+        .bad-ux-error { color: red; font-size: 12px; display: none; }
+        .bad-ux-container { display: block; }
+        
+        /* VERSIÓN BUENA (Con UX) */
+        .good-ux-container { display: none; }
+        .step { display: none; animation: fadeIn 0.5s; }
+        .step.active { display: block; }
+        .progress-bar { height: 5px; background: #eee; margin-bottom: 20px; border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #2ed573; width: 0%; transition: width 0.3s; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { font-size: 14px; font-weight: 600; color: #555; display: block; margin-bottom: 5px; }
+        .hint { font-size: 11px; color: #888; margin-top: -5px; display: block; }
+        .btn-nav { display: flex; justify_content: space-between; gap: 10px; margin-top: 20px; }
+        .btn-next { background: #2c3e50; color: white; border: none; padding: 12px; flex: 1; border-radius: 5px; cursor: pointer; }
+        .btn-back { background: #ecf0f1; color: #333; border: none; padding: 12px; border-radius: 5px; cursor: pointer; }
+        .valid-check { color: #2ed573; font-weight: bold; margin-left: 5px; display: none; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="simulation-controls">
+        <span>MODO ACTUAL: </span>
+        <button id="toggleMode" class="toggle-btn" onclick="toggleUX()">VERSIÓN MALA (Original)</button>
+        <p style="font-size: 12px; margin-top: 5px;">Haz clic para alternar entre el diseño fallido y la solución UX</p>
+    </div>
+
+    <div class="phone-container">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="width: 50px; height: 50px; background: #3498db; border-radius: 50%; display: inline-block;"></div>
+            <h3 style="margin: 5px 0;">NeoWallet</h3>
+        </div>
+
+        <div id="badVersion" class="bad-ux-container">
+            <h3>Crear Cuenta</h3>
+            <p style="font-size: 12px; color: red;">Todos los campos son obligatorios.</p>
+            
+            <input type="text" placeholder="Nombre Completo">
+            <input type="text" placeholder="Usuario">
+            <input type="email" placeholder="Email">
+            <input type="text" placeholder="Confirmar Email">
+            <input type="password" placeholder="Contraseña">
+            <input type="password" placeholder="Repetir Contraseña">
+            <input type="text" placeholder="Fecha Nacimiento (DD/MM/AAAA)">
+            <input type="text" placeholder="Dirección">
+            <input type="text" placeholder="Ciudad">
+            <input type="text" placeholder="Código Postal">
+            <input type="text" placeholder="RFC con Homoclave">
+            <input type="text" placeholder="Teléfono">
+            
+            <div style="margin: 10px 0;">
+                <input type="checkbox" style="width: auto;"> Acepto términos y condiciones y política de privacidad y uso de datos.
+            </div>
+
+            <button class="submit" onclick="alert('Error: La contraseña debe tener una mayúscula, un número y un símbolo. El RFC no es válido.')">REGISTRARSE</button>
+        </div>
+
+        <div id="goodVersion" class="good-ux-container">
+            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            
+            <div class="step active" id="step1">
+                <h4>Empecemos 👋</h4>
+                <p style="font-size: 13px; color: #666;">¿Cómo te llamas?</p>
+                <div class="input-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="goodName" oninput="validateStep1()">
+                </div>
+                <div class="input-group">
+                    <label>Tu mejor Email</label>
+                    <input type="email" id="goodEmail" oninput="validateStep1()">
+                </div>
+                <button class="btn-next" id="btnS1" disabled onclick="nextStep(2)">Siguiente</button>
+            </div>
+
+            <div class="step" id="step2">
+                <h4>Seguridad 🔒</h4>
+                <div class="input-group">
+                    <label>Crea una contraseña segura</label>
+                    <input type="password" id="goodPass" oninput="checkPass()">
+                    <span class="hint" id="passHint">Mínimo 6 caracteres</span>
+                </div>
+                <div class="btn-nav">
+                    <button class="btn-back" onclick="nextStep(1)">Atrás</button>
+                    <button class="btn-next" id="btnS2" disabled onclick="nextStep(3)">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="step" id="step3">
+                <h4>¡Casi listo! 🚀</h4>
+                <p style="font-size: 13px;">Solo necesitamos esto para activar tu billetera.</p>
+                <div class="input-group">
+                    <label>Número de Celular</label>
+                    <input type="tel" placeholder="10 dígitos">
+                </div>
+                <button class="submit" style="background: #2ed573;" onclick="alert('¡Éxito! Registro completado con UX mejorada.')">CREAR CUENTA</button>
+                <div class="btn-nav">
+                    <button class="btn-back" style="width: 100%;" onclick="nextStep(2)">Atrás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica para cambiar entre MALA y BUENA versión
+        let isGoodUX = false;
+        function toggleUX() {
+            isGoodUX = !isGoodUX;
+            const btn = document.getElementById('toggleMode');
+            const bad = document.getElementById('badVersion');
+            const good = document.getElementById('goodVersion');
+
+            if (isGoodUX) {
+                btn.textContent = "MODO: BUEN DISEÑO (Mejorado)";
+                btn.classList.add('active');
+                bad.style.display = 'none';
+                good.style.display = 'block';
+                updateProgress(1);
+            } else {
+                btn.textContent = "MODO: MAL DISEÑO (Original)";
+                btn.classList.remove('active');
+                bad.style.display = 'block';
+                good.style.display = 'none';
+            }
+        }
+
+        // Lógica del Wizard (Versión Buena)
+        function nextStep(stepNumber) {
+            // Ocultar todos
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            // Mostrar actual
+            document.getElementById('step' + stepNumber).classList.add('active');
+            updateProgress(stepNumber);
+        }
+
+        function updateProgress(step) {
+            const totalSteps = 3;
+            const percent = ((step - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        // Validaciones Simples
+        function validateStep1() {
+            const name = document.getElementById('goodName').value;
+            const email = document.getElementById('goodEmail').value;
+            document.getElementById('btnS1').disabled = !(name.length > 2 && email.includes('@'));
+        }
+
+        function checkPass() {
+            const pass = document.getElementById('goodPass').value;
+            const hint = document.getElementById('passHint');
+            const btn = document.getElementById('btnS2');
+
+            if (pass.length >= 6) {
+                hint.style.color = "#2ed573";
+                hint.textContent = "✔ Contraseña segura";
+                btn.disabled = false;
+            } else {
+                hint.style.color = "#888";
+                hint.textContent = "Mínimo 6 caracteres";
+                btn.disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>
