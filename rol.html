@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transmisiones // TEMPLATE </title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+  <style>
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.8; }
+      94% { opacity: 1; }
+      97% { opacity: 0.9; }
+      98% { opacity: 1; }
+    }
+    
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+    
+    @keyframes glow-pulse {
+      0%, 100% { filter: drop-shadow(0 0 5px currentColor) drop-shadow(0 0 10px currentColor); }
+      50% { filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor) drop-shadow(0 0 30px currentColor); }
+    }
+    
+    @keyframes data-stream {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 0% 100%; }
+    }
+    
+    @keyframes hologram {
+      0%, 100% { transform: perspective(500px) rotateX(0deg); opacity: 1; }
+      25% { transform: perspective(500px) rotateX(0.5deg); opacity: 0.98; }
+      50% { transform: perspective(500px) rotateX(0deg); opacity: 1; }
+      75% { transform: perspective(500px) rotateX(-0.5deg); opacity: 0.99; }
+    }
+    
+    @keyframes circuit-flow {
+      0% { stroke-dashoffset: 1000; }
+      100% { stroke-dashoffset: 0; }
+    }
+    
+    @keyframes text-glitch {
+      0%, 100% { text-shadow: 2px 0 #00f0ff, -2px 0 #ff00ff; }
+      25% { text-shadow: -2px 0 #00f0ff, 2px 0 #ff00ff; }
+      50% { text-shadow: 2px 2px #00f0ff, -2px -2px #ff00ff; }
+      75% { text-shadow: -2px 2px #00f0ff, 2px -2px #ff00ff; }
+    }
+    
+    .cyber-bg {
+      background: 
+        radial-gradient(ellipse at 50% 0%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(180, 0, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 20% 80%, rgba(0, 100, 255, 0.1) 0%, transparent 40%),
+        linear-gradient(180deg, #0a0a12 0%, #0d0d1a 50%, #0a0a12 100%);
+    }
+    
+    .circuit-pattern {
+      background-image: 
+        linear-gradient(90deg, transparent 49.5%, rgba(0, 240, 255, 0.03) 49.5%, rgba(0, 240, 255, 0.03) 50.5%, transparent 50.5%),
+        linear-gradient(0deg, transparent 49.5%, rgba(0, 240, 255, 0.03) 49.5%, rgba(0, 240, 255, 0.03) 50.5%, transparent 50.5%);
+      background-size: 40px 40px;
+    }
+    
+    .hologram-effect {
+      animation: hologram 4s ease-in-out infinite, flicker 8s linear infinite;
+    }
+    
+    .glow-text {
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+    
+    .glitch-text {
+      animation: text-glitch 0.3s ease-in-out infinite;
+    }
+    
+    .scanline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(180deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+      animation: scanline 4s linear infinite;
+      pointer-events: none;
+    }
+    
+    .data-panel {
+      background: 
+        linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(180, 0, 255, 0.05) 0%, transparent 50%),
+        rgba(10, 10, 20, 0.8);
+      border: 1px solid;
+      border-image: linear-gradient(135deg, #00f0ff, #b400ff) 1;
+      box-shadow: 
+        0 0 20px rgba(0, 240, 255, 0.2),
+        inset 0 0 30px rgba(0, 240, 255, 0.05);
+    }
+    
+    .neon-border {
+      position: relative;
+    }
+    
+    .neon-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, #00f0ff, #b400ff, #00f0ff);
+      z-index: -1;
+      filter: blur(8px);
+      opacity: 0.5;
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+    
+    .mono-text {
+      font-family: 'Share Tech Mono', monospace;
+    }
+    
+    .title-font {
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    .data-row {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .data-row:hover {
+      background: linear-gradient(90deg, rgba(0, 240, 255, 0.1) 0%, transparent 100%);
+      padding-left: 1rem;
+    }
+    
+    .data-row::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 1px;
+      background: #00f0ff;
+      transition: width 0.3s ease;
+    }
+    
+    .data-row:hover::before {
+      width: 8px;
+    }
+    
+    .corner-accent {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: #00f0ff;
+    }
+    
+    .corner-tl { top: 0; left: 0; border-top: 2px solid; border-left: 2px solid; }
+    .corner-tr { top: 0; right: 0; border-top: 2px solid; border-right: 2px solid; }
+    .corner-bl { bottom: 0; left: 0; border-bottom: 2px solid; border-left: 2px solid; }
+    .corner-br { bottom: 0; right: 0; border-bottom: 2px solid; border-right: 2px solid; }
+
+    .control-btn {
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      background: rgba(2, 6, 23, 0.8);
+      color: #c7f9ff;
+      border-radius: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.75rem;
+      line-height: 1.1;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      border-color: rgba(34, 211, 238, 0.75);
+      background: rgba(34, 211, 238, 0.14);
+    }
+
+    .editable-assignee {
+      cursor: text;
+      border-bottom: 1px dashed rgba(34, 211, 238, 0.2);
+      min-width: 120px;
+      padding: 0.1rem 0.2rem;
+      border-radius: 0.25rem;
+    }
+
+    .editable-assignee:focus {
+      outline: none;
+      border-bottom-color: rgba(34, 211, 238, 0.8);
+      background: rgba(34, 211, 238, 0.12);
+    }
+
+    .edit-action {
+      border: 1px solid rgba(180, 0, 255, 0.45);
+      color: #e8d8ff;
+      border-radius: 0.35rem;
+      padding: 0.25rem 0.5rem;
+      margin-left: auto;
+      font-size: 0.7rem;
+      line-height: 1;
+    }
+
+    .warnings-panel {
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      background: rgba(251, 191, 36, 0.08);
+      color: #fde68a;
+    }
+
+    @media (max-width: 640px) {
+      .data-row {
+        gap: 0.4rem;
+      }
+
+      .data-row .editable-assignee {
+        flex: 1 1 100%;
+      }
+    }
+
+    @media print {
+      .no-print,
+      .scanline::before,
+      svg,
+      .absolute.pointer-events-none {
+        display: none !important;
+      }
+
+      body {
+        background: #fff !important;
+        color: #111 !important;
+      }
+
+      .data-panel {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        background: #fff !important;
+      }
+
+      .hologram-effect,
+      .glow-text,
+      .glitch-text {
+        animation: none !important;
+      }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full m-0 p-0 overflow-auto cyber-bg circuit-pattern">
+  <div class="min-h-full w-full flex flex-col items-center justify-center p-4 sm:p-8 relative scanline"><!-- Decorative Circuit Lines SVG -->
+   <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-30" xmlns="http://www.w3.org/2000/svg"><defs>
+     <lineargradient id="circuit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b400ff;stop-opacity:1" />
+     </lineargradient>
+    </defs> <path d="M0,100 Q50,100 100,50 T200,50 T300,100 T400,50" stroke="url(#circuit-grad)" stroke-width="1" fill="none" style="stroke-dasharray: 1000; animation: circuit-flow 20s linear infinite;" transform="translate(0, 50)" /> <path d="M100,0 L100,200 M150,50 L150,150" stroke="url(#circuit-grad)" stroke-width="1" fill="none" opacity="0.5" /> <circle cx="100" cy="200" r="4" fill="#00f0ff" opacity="0.8" /> <circle cx="150" cy="50" r="3" fill="#b400ff" opacity="0.8" />
+   </svg><!-- Main Container -->
+   <div class="relative z-10 w-full max-w-5xl hologram-effect"><!-- Main Title -->
+    <div class="text-center mb-8 sm:mb-12">
+     <div class="inline-block relative">
+      <h1 id="main-title" class="title-font text-3xl sm:text-5xl md:text-6xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 glow-text glitch-text">TRANSMISIONES // TEMPLATE </h1>
+      <div class="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+      <div class="absolute -bottom-4 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50"></div>
+     </div><!-- Status Indicator -->
+     <div class="mt-4 flex items-center justify-center gap-3 mono-text text-xs sm:text-sm text-cyan-400/70"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> <span>SISTEMA ACTIVO</span> <span class="text-purple-400">|</span> <span>SEÑAL: 98.7%</span> <span class="text-purple-400">|</span> <span>ENCRIPTACIÓN: AES-256</span>
+     </div>
+     <div class="mt-4 flex flex-wrap items-center justify-center gap-2 mono-text text-xs sm:text-sm no-print">
+      <label for="month-select" class="text-cyan-300">MES:</label>
+      <select id="month-select" class="bg-slate-950/80 text-cyan-200 border border-cyan-400/40 rounded px-2 py-1 focus:outline-none focus:border-cyan-300">
+      </select>
+      <button id="add-month-btn" type="button" class="px-3 py-1 rounded border border-purple-400/50 text-purple-200 hover:bg-purple-400/10 transition">Agregar mes</button>
+     </div>
+     <div class="mt-3 data-panel rounded-lg p-3 sm:p-4 mono-text no-print">
+      <div class="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm">
+       <select id="view-filter" class="bg-slate-950/80 text-cyan-200 border border-cyan-400/40 rounded px-2 py-1">
+        <option value="all">Ver: Todo</option>
+        <option value="sunday">Solo domingos</option>
+        <option value="monday">Solo lunes</option>
+       </select>
+       <input id="person-search" type="text" placeholder="Buscar persona..." class="bg-slate-950/80 text-cyan-200 border border-cyan-400/40 rounded px-2 py-1 min-w-40">
+       <button id="clone-month-btn" type="button" class="control-btn">Clonar mes</button>
+       <button id="set-rotation-btn" type="button" class="control-btn">Configurar rotación</button>
+       <button id="auto-rotate-btn" type="button" class="control-btn">Auto rotar</button>
+       <button id="export-json-btn" type="button" class="control-btn">Exportar JSON</button>
+       <button id="export-csv-btn" type="button" class="control-btn">Exportar CSV</button>
+       <button id="import-json-btn" type="button" class="control-btn">Importar JSON</button>
+       <button id="print-btn" type="button" class="control-btn">Imprimir / PDF</button>
+       <input id="import-json-input" type="file" accept=".json,application/json" class="hidden">
+      </div>
+     </div>
+    </div><!-- Data Panels Container -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8"><!-- Left Panel - Domingos -->
+     <div id="left-panel" class="data-panel rounded-lg p-4 sm:p-6 relative neon-border">
+      <div class="corner-accent corner-tl"></div>
+      <div class="corner-accent corner-tr"></div>
+      <div class="corner-accent corner-bl"></div>
+      <div class="corner-accent corner-br"></div>
+      <h2 id="left-panel-title" class="title-font text-lg sm:text-xl text-cyan-400 mb-4 sm:mb-6 flex items-center gap-2"><span class="text-purple-400">›</span> <span class="glow-text">&gt; DOMINGOS_</span> <span class="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent ml-2"></span></h2>
+      <div id="sunday-list" class="space-y-2 sm:space-y-3 mono-text text-xs sm:text-sm">
+      </div><!-- Panel Footer -->
+      <div class="mt-4 sm:mt-6 pt-3 border-t border-cyan-400/20 flex justify-between text-xs text-cyan-400/50 mono-text"><span id="left-records">REGISTROS: 0</span> <span>CANAL: DOM-001</span>
+      </div>
+     </div><!-- Right Panel - Lunes -->
+     <div id="right-panel" class="data-panel rounded-lg p-4 sm:p-6 relative neon-border">
+      <div class="corner-accent corner-tl" style="border-color: #b400ff;"></div>
+      <div class="corner-accent corner-tr" style="border-color: #b400ff;"></div>
+      <div class="corner-accent corner-bl" style="border-color: #b400ff;"></div>
+      <div class="corner-accent corner-br" style="border-color: #b400ff;"></div>
+      <h2 id="right-panel-title" class="title-font text-lg sm:text-xl text-purple-400 mb-4 sm:mb-6 flex items-center gap-2"><span class="text-cyan-400">›</span> <span class="glow-text">&gt; LUNES_</span> <span class="flex-1 h-px bg-gradient-to-r from-purple-400/50 to-transparent ml-2"></span></h2>
+      <div id="monday-list" class="space-y-2 sm:space-y-3 mono-text text-xs sm:text-sm">
+      </div><!-- Panel Footer -->
+      <div class="mt-4 sm:mt-6 pt-3 border-t border-purple-400/20 flex justify-between text-xs text-purple-400/50 mono-text"><span id="right-records">REGISTROS: 0</span> <span>CANAL: LUN-002</span>
+      </div>
+     </div>
+    </div><!-- Bottom Status Bar -->
+    <div class="mt-6 sm:mt-8 text-center mono-text text-xs text-cyan-400/40">
+     <div class="inline-flex items-center gap-2 sm:gap-4 flex-wrap justify-center"><span>◇ PROTOCOLO: HOLOGRAM-V3</span> <span class="text-purple-400/40">|</span> <span id="sync-status">◇ ÚLTIMA SYNC: 2025.03.01</span> <span class="text-purple-400/40">|</span> <span>◇ NODO: MX-CENTRAL</span>
+     </div>
+    </div>
+    <div id="validation-alert" class="mt-4 hidden warnings-panel rounded-lg p-3 mono-text text-xs sm:text-sm"></div>
+    <div class="mt-4 data-panel rounded-lg p-3 sm:p-4 mono-text no-print">
+     <div class="flex items-center justify-between gap-2">
+      <h3 class="title-font text-sm text-cyan-300">Historial de cambios</h3>
+      <button id="clear-history-btn" class="control-btn" type="button">Limpiar historial</button>
+     </div>
+     <div id="history-list" class="mt-2 text-xs text-cyan-100/80 max-h-40 overflow-auto">Sin cambios todavía.</div>
+    </div>
+   </div><!-- Floating Particles Effect -->
+   <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute w-1 h-1 bg-cyan-400 rounded-full opacity-60 animate-pulse" style="top: 20%; left: 10%;"></div>
+    <div class="absolute w-1 h-1 bg-purple-400 rounded-full opacity-60 animate-pulse" style="top: 40%; left: 85%; animation-delay: 0.5s;"></div>
+    <div class="absolute w-1 h-1 bg-cyan-400 rounded-full opacity-60 animate-pulse" style="top: 70%; left: 15%; animation-delay: 1s;"></div>
+    <div class="absolute w-1 h-1 bg-purple-400 rounded-full opacity-60 animate-pulse" style="top: 30%; left: 90%; animation-delay: 1.5s;"></div>
+    <div class="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-30 animate-ping" style="top: 60%; left: 5%;"></div>
+    <div class="absolute w-2 h-2 bg-purple-400 rounded-full opacity-30 animate-ping" style="top: 80%; left: 95%; animation-delay: 2s;"></div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: 'TRANSMISIONES // TEMPLATE',
+      left_panel_title: '> DOMINGOS_',
+      right_panel_title: '> LUNES_',
+      background_color: '#0a0a12',
+      primary_accent: '#00f0ff',
+      secondary_accent: '#b400ff',
+      text_color: '#e0f7ff',
+      font_family: 'Orbitron',
+      font_size: 16
+    };
+
+    const LOCAL_STORAGE_KEY = 'rol_scheduler_state_v2';
+    const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const monthAbbreviations = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+    const initialScheduleByMonth = {
+      '2025-03': {
+        year: 2025,
+        monthIndex: 2,
+        sundayAssignments: ['Ale / Adrian 📷', 'Panchito / Carlos 📷', 'Emmanuel M / Ale 📷', 'Panchito / Carlos', 'Panchito / Ale 📷'],
+        mondayAssignments: ['Emmanuel R', 'Emmanuel R', 'Emmanuel R', 'Emmanuel R', 'Emmanuel R']
+      },
+      '2025-04': {
+        year: 2025,
+        monthIndex: 3,
+        sundayAssignments: ['Por definir', 'Por definir', 'Por definir', 'Por definir'],
+        mondayAssignments: ['Por definir', 'Por definir', 'Por definir', 'Por definir']
+      }
+    };
+
+    let appState = {
+      scheduleByMonth: JSON.parse(JSON.stringify(initialScheduleByMonth)),
+      currentMonthKey: '2025-03',
+      viewFilter: 'all',
+      searchQuery: '',
+      rotationPool: [],
+      history: []
+    };
+
+    function saveState() {
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
+      } catch (error) {
+        console.error('No se pudo guardar en localStorage', error);
+      }
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (!raw) {
+          return;
+        }
+
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          if (parsed.scheduleByMonth && typeof parsed.scheduleByMonth === 'object') {
+            appState.scheduleByMonth = parsed.scheduleByMonth;
+          }
+          if (typeof parsed.currentMonthKey === 'string') {
+            appState.currentMonthKey = parsed.currentMonthKey;
+          }
+          if (typeof parsed.viewFilter === 'string') {
+            appState.viewFilter = parsed.viewFilter;
+          }
+          if (typeof parsed.searchQuery === 'string') {
+            appState.searchQuery = parsed.searchQuery;
+          }
+          if (Array.isArray(parsed.rotationPool)) {
+            appState.rotationPool = parsed.rotationPool;
+          }
+          if (Array.isArray(parsed.history)) {
+            appState.history = parsed.history;
+          }
+        }
+      } catch (error) {
+        console.error('No se pudo leer localStorage', error);
+      }
+    }
+
+    function getDatesForWeekday(year, monthIndex, weekday) {
+      const dates = [];
+      const cursor = new Date(year, monthIndex, 1);
+      while (cursor.getMonth() === monthIndex) {
+        if (cursor.getDay() === weekday) {
+          dates.push(new Date(cursor));
+        }
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return dates;
+    }
+
+    function formatDateLabel(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${day} ${monthAbbreviations[date.getMonth()]}`;
+    }
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function buildRows(dayType, dates, assignments, isSundayPanel, searchQuery) {
+      const normalizedQuery = searchQuery.trim().toLowerCase();
+
+      return dates.map((date, index) => {
+        const assignee = assignments[index] || 'Por definir';
+        if (normalizedQuery && !assignee.toLowerCase().includes(normalizedQuery)) {
+          return '';
+        }
+
+        const safeAssignee = escapeHtml(assignee);
+        const commonAttrs = `data-day="${dayType}" data-index="${index}" data-month="${appState.currentMonthKey}"`;
+
+        if (isSundayPanel) {
+          return `
+            <div class="data-row py-2 text-cyan-100/90 flex items-start">
+              <span class="text-purple-400 mr-2 flex-shrink-0">◈</span>
+              <span class="text-cyan-400 flex-shrink-0">${formatDateLabel(date)}</span>
+              <span class="text-purple-400/60 mx-2 flex-shrink-0">::</span>
+              <span class="text-cyan-100/80 editable-assignee" contenteditable="true" ${commonAttrs}>${safeAssignee}</span>
+              <button class="edit-action sm:hidden" type="button" ${commonAttrs}>Editar</button>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="data-row py-2 text-purple-100/90 flex items-start">
+            <span class="text-cyan-400 mr-2 flex-shrink-0">◈</span>
+            <span class="text-purple-400 flex-shrink-0">${formatDateLabel(date)}</span>
+            <span class="text-cyan-400/60 mx-2 flex-shrink-0">::</span>
+            <span class="text-purple-100/80 editable-assignee" contenteditable="true" ${commonAttrs}>${safeAssignee}</span>
+            <button class="edit-action sm:hidden" type="button" ${commonAttrs}>Editar</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateMonthSelectOptions() {
+      const monthSelect = document.getElementById('month-select');
+      if (!monthSelect) {
+        return;
+      }
+
+      monthSelect.innerHTML = Object.keys(appState.scheduleByMonth)
+        .sort()
+        .map((key) => {
+          const item = appState.scheduleByMonth[key];
+          return `<option value="${key}">${monthNames[item.monthIndex]} ${item.year}</option>`;
+        })
+        .join('');
+      monthSelect.value = appState.currentMonthKey;
+    }
+
+    function getVisibleCount(assignments, query) {
+      if (!query.trim()) {
+        return assignments.length;
+      }
+      const normalized = query.trim().toLowerCase();
+      return assignments.filter(item => (item || '').toLowerCase().includes(normalized)).length;
+    }
+
+    function updatePanelVisibility() {
+      const leftPanel = document.getElementById('left-panel');
+      const rightPanel = document.getElementById('right-panel');
+      if (!leftPanel || !rightPanel) {
+        return;
+      }
+
+      leftPanel.classList.remove('hidden');
+      rightPanel.classList.remove('hidden');
+      if (appState.viewFilter === 'sunday') {
+        rightPanel.classList.add('hidden');
+      } else if (appState.viewFilter === 'monday') {
+        leftPanel.classList.add('hidden');
+      }
+    }
+
+    function validateWeekendDuplicates(data) {
+      const warnings = [];
+      const sundayAssignments = data.sundayAssignments || [];
+      const mondayAssignments = data.mondayAssignments || [];
+      const minLength = Math.min(sundayAssignments.length, mondayAssignments.length);
+
+      for (let i = 0; i < minLength; i += 1) {
+        const sunday = (sundayAssignments[i] || '').trim().toLowerCase();
+        const monday = (mondayAssignments[i] || '').trim().toLowerCase();
+        if (!sunday || !monday || sunday === 'por definir' || monday === 'por definir') {
+          continue;
+        }
+        if (sunday === monday) {
+          warnings.push(`Posible duplicado en bloque ${i + 1}: ${sundayAssignments[i]} (domingo y lunes).`);
+        }
+      }
+
+      return warnings;
+    }
+
+    function renderWarnings(data) {
+      const alertBox = document.getElementById('validation-alert');
+      if (!alertBox) {
+        return;
+      }
+
+      const warnings = validateWeekendDuplicates(data);
+      if (!warnings.length) {
+        alertBox.classList.add('hidden');
+        alertBox.textContent = '';
+        return;
+      }
+
+      alertBox.classList.remove('hidden');
+      alertBox.innerHTML = warnings.map((warning) => `⚠ ${escapeHtml(warning)}`).join('<br>');
+    }
+
+    function renderHistory() {
+      const historyList = document.getElementById('history-list');
+      if (!historyList) {
+        return;
+      }
+
+      if (!appState.history.length) {
+        historyList.textContent = 'Sin cambios todavía.';
+        return;
+      }
+
+      const items = appState.history
+        .slice(-30)
+        .reverse()
+        .map((entry) => {
+          const stamp = new Date(entry.timestamp).toLocaleString('es-MX');
+          return `<div class="py-1 border-b border-cyan-500/10">${escapeHtml(stamp)} :: ${escapeHtml(entry.message)}</div>`;
+        })
+        .join('');
+      historyList.innerHTML = items;
+    }
+
+    function pushHistory(message) {
+      appState.history.push({
+        timestamp: new Date().toISOString(),
+        message
+      });
+      if (appState.history.length > 500) {
+        appState.history = appState.history.slice(-500);
+      }
+      renderHistory();
+      saveState();
+    }
+
+    function renderMonth(key) {
+      const data = appState.scheduleByMonth[key];
+      if (!data) {
+        return;
+      }
+
+      appState.currentMonthKey = key;
+      const monthName = monthNames[data.monthIndex];
+      const sundayDates = getDatesForWeekday(data.year, data.monthIndex, 0);
+      const mondayDates = getDatesForWeekday(data.year, data.monthIndex, 1);
+
+      const mainTitle = document.getElementById('main-title');
+      const sundayList = document.getElementById('sunday-list');
+      const mondayList = document.getElementById('monday-list');
+      const leftRecords = document.getElementById('left-records');
+      const rightRecords = document.getElementById('right-records');
+      const syncStatus = document.getElementById('sync-status');
+      const monthSelect = document.getElementById('month-select');
+      const pageTitle = document.querySelector('title');
+      const personSearch = document.getElementById('person-search');
+      if (personSearch && personSearch.value !== appState.searchQuery) {
+        personSearch.value = appState.searchQuery;
+      }
+
+      if (mainTitle) {
+        mainTitle.textContent = `TRANSMISIONES // ${monthName.toUpperCase()}`;
+      }
+      if (pageTitle) {
+        pageTitle.textContent = `Transmisiones // ${monthName}`;
+      }
+      if (sundayList) {
+        sundayList.innerHTML = buildRows('sunday', sundayDates, data.sundayAssignments, true, appState.searchQuery);
+      }
+      if (mondayList) {
+        mondayList.innerHTML = buildRows('monday', mondayDates, data.mondayAssignments, false, appState.searchQuery);
+      }
+      if (leftRecords) {
+        leftRecords.textContent = `REGISTROS: ${getVisibleCount(data.sundayAssignments, appState.searchQuery)} / ${sundayDates.length}`;
+      }
+      if (rightRecords) {
+        rightRecords.textContent = `REGISTROS: ${getVisibleCount(data.mondayAssignments, appState.searchQuery)} / ${mondayDates.length}`;
+      }
+      if (syncStatus) {
+        const syncMonth = String(data.monthIndex + 1).padStart(2, '0');
+        syncStatus.textContent = `◇ ÚLTIMA SYNC: ${data.year}.${syncMonth}.01`;
+      }
+      if (monthSelect && monthSelect.value !== key) {
+        monthSelect.value = key;
+      }
+
+      updatePanelVisibility();
+      renderWarnings(data);
+      saveState();
+    }
+
+    function monthNameToIndex(name) {
+      const normalized = (name || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim();
+
+      return monthNames.findIndex((month) => {
+        const monthNormalized = month
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+        return monthNormalized === normalized;
+      });
+    }
+
+    function addMonthFromPrompt() {
+      const base = appState.scheduleByMonth[appState.currentMonthKey];
+      if (!base) {
+        return;
+      }
+
+      const monthInput = window.prompt('Escribe el nombre del mes (ejemplo: Mayo):');
+      if (!monthInput) {
+        return;
+      }
+
+      const monthIndex = monthNameToIndex(monthInput);
+      if (monthIndex < 0) {
+        window.alert('Mes no reconocido. Usa un nombre en español como "Abril" o "Mayo".');
+        return;
+      }
+
+      const defaultYear = String(base.year);
+      const yearInput = window.prompt('Año del mes:', defaultYear);
+      if (!yearInput) {
+        return;
+      }
+
+      const year = Number(yearInput);
+      if (!Number.isInteger(year) || year < 1900 || year > 3000) {
+        window.alert('Año inválido.');
+        return;
+      }
+
+      const key = `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
+      if (!appState.scheduleByMonth[key]) {
+        const sundayCount = getDatesForWeekday(year, monthIndex, 0).length;
+        const mondayCount = getDatesForWeekday(year, monthIndex, 1).length;
+        appState.scheduleByMonth[key] = {
+          year,
+          monthIndex,
+          sundayAssignments: Array.from({ length: sundayCount }, () => 'Por definir'),
+          mondayAssignments: Array.from({ length: mondayCount }, () => 'Por definir')
+        };
+        pushHistory(`Mes agregado: ${monthNames[monthIndex]} ${year}.`);
+      }
+
+      updateMonthSelectOptions();
+      renderMonth(key);
+    }
+
+    function applyInlineEdit(target) {
+      const day = target.dataset.day;
+      const index = Number(target.dataset.index);
+      const monthKey = target.dataset.month;
+      const data = appState.scheduleByMonth[monthKey];
+      if (!data || Number.isNaN(index)) {
+        return;
+      }
+
+      const listKey = day === 'sunday' ? 'sundayAssignments' : 'mondayAssignments';
+      const previous = data[listKey][index] || 'Por definir';
+      const nextValue = (target.textContent || '').trim() || 'Por definir';
+      target.textContent = nextValue;
+
+      if (previous === nextValue) {
+        return;
+      }
+
+      data[listKey][index] = nextValue;
+      pushHistory(`Editado ${day === 'sunday' ? 'domingo' : 'lunes'} #${index + 1}: "${previous}" -> "${nextValue}".`);
+      renderMonth(monthKey);
+    }
+
+    function cloneAssignments(source, targetLength) {
+      if (!Array.isArray(source) || !source.length) {
+        return Array.from({ length: targetLength }, () => 'Por definir');
+      }
+      return Array.from({ length: targetLength }, (_, index) => source[index % source.length] || 'Por definir');
+    }
+
+    function cloneMonthFromCurrent() {
+      const source = appState.scheduleByMonth[appState.currentMonthKey];
+      if (!source) {
+        return;
+      }
+
+      const nextMonthIndex = source.monthIndex === 11 ? 0 : source.monthIndex + 1;
+      const nextYear = source.monthIndex === 11 ? source.year + 1 : source.year;
+      const suggestedKey = `${nextYear}-${String(nextMonthIndex + 1).padStart(2, '0')}`;
+      const targetInput = window.prompt('Mes destino (AAAA-MM):', suggestedKey);
+      if (!targetInput) {
+        return;
+      }
+
+      if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(targetInput)) {
+        window.alert('Formato inválido. Usa AAAA-MM.');
+        return;
+      }
+
+      const [yearStr, monthStr] = targetInput.split('-');
+      const targetYear = Number(yearStr);
+      const targetMonthIndex = Number(monthStr) - 1;
+      const targetSundayCount = getDatesForWeekday(targetYear, targetMonthIndex, 0).length;
+      const targetMondayCount = getDatesForWeekday(targetYear, targetMonthIndex, 1).length;
+
+      if (appState.scheduleByMonth[targetInput] && !window.confirm('Ese mes ya existe. ¿Sobrescribirlo?')) {
+        return;
+      }
+
+      appState.scheduleByMonth[targetInput] = {
+        year: targetYear,
+        monthIndex: targetMonthIndex,
+        sundayAssignments: cloneAssignments(source.sundayAssignments, targetSundayCount),
+        mondayAssignments: cloneAssignments(source.mondayAssignments, targetMondayCount)
+      };
+
+      updateMonthSelectOptions();
+      renderMonth(targetInput);
+      pushHistory(`Mes clonado: ${monthNames[source.monthIndex]} ${source.year} -> ${monthNames[targetMonthIndex]} ${targetYear}.`);
+    }
+
+    function setRotationPool() {
+      const currentValue = appState.rotationPool.join(', ');
+      const input = window.prompt('Lista de personas separada por coma:', currentValue || 'Nombre 1, Nombre 2');
+      if (!input) {
+        return;
+      }
+
+      const pool = input
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean);
+
+      if (!pool.length) {
+        window.alert('Debes ingresar al menos una persona.');
+        return;
+      }
+
+      appState.rotationPool = pool;
+      pushHistory(`Rotación configurada con ${pool.length} persona(s).`);
+    }
+
+    function applyAutoRotation() {
+      const data = appState.scheduleByMonth[appState.currentMonthKey];
+      if (!data) {
+        return;
+      }
+
+      if (!appState.rotationPool.length) {
+        setRotationPool();
+      }
+      if (!appState.rotationPool.length) {
+        return;
+      }
+
+      const pool = appState.rotationPool;
+      data.sundayAssignments = data.sundayAssignments.map((_, index) => pool[index % pool.length]);
+      data.mondayAssignments = data.mondayAssignments.map((_, index) => pool[(index + data.sundayAssignments.length) % pool.length]);
+
+      pushHistory(`Auto rotación aplicada a ${monthNames[data.monthIndex]} ${data.year}.`);
+      renderMonth(appState.currentMonthKey);
+    }
+
+    function downloadBlob(fileName, content, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportJson() {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        state: appState
+      };
+      downloadBlob(`rol-transmisiones-${appState.currentMonthKey}.json`, JSON.stringify(payload, null, 2), 'application/json');
+      pushHistory('Exportación JSON generada.');
+    }
+
+    function exportCsv() {
+      const rows = ['month_key,year,month_name,day_type,date_label,assignee'];
+      Object.keys(appState.scheduleByMonth).sort().forEach((key) => {
+        const month = appState.scheduleByMonth[key];
+        const sundayDates = getDatesForWeekday(month.year, month.monthIndex, 0);
+        const mondayDates = getDatesForWeekday(month.year, month.monthIndex, 1);
+
+        sundayDates.forEach((date, index) => {
+          const assignee = (month.sundayAssignments[index] || 'Por definir').replaceAll('"', '""');
+          rows.push(`${key},${month.year},${monthNames[month.monthIndex]},domingo,${formatDateLabel(date)},"${assignee}"`);
+        });
+        mondayDates.forEach((date, index) => {
+          const assignee = (month.mondayAssignments[index] || 'Por definir').replaceAll('"', '""');
+          rows.push(`${key},${month.year},${monthNames[month.monthIndex]},lunes,${formatDateLabel(date)},"${assignee}"`);
+        });
+      });
+
+      downloadBlob(`rol-transmisiones-${appState.currentMonthKey}.csv`, rows.join('\n'), 'text/csv;charset=utf-8');
+      pushHistory('Exportación CSV generada.');
+    }
+
+    function normalizeImportedState(payload) {
+      if (!payload || typeof payload !== 'object') {
+        return null;
+      }
+
+      const candidate = payload.state && typeof payload.state === 'object' ? payload.state : payload;
+      if (!candidate.scheduleByMonth || typeof candidate.scheduleByMonth !== 'object') {
+        return null;
+      }
+
+      return {
+        scheduleByMonth: candidate.scheduleByMonth,
+        currentMonthKey: typeof candidate.currentMonthKey === 'string' ? candidate.currentMonthKey : Object.keys(candidate.scheduleByMonth)[0],
+        viewFilter: typeof candidate.viewFilter === 'string' ? candidate.viewFilter : 'all',
+        searchQuery: typeof candidate.searchQuery === 'string' ? candidate.searchQuery : '',
+        rotationPool: Array.isArray(candidate.rotationPool) ? candidate.rotationPool : [],
+        history: Array.isArray(candidate.history) ? candidate.history : []
+      };
+    }
+
+    function importJsonFile(file) {
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || '{}'));
+          const normalized = normalizeImportedState(parsed);
+          if (!normalized) {
+            window.alert('JSON inválido para importar.');
+            return;
+          }
+          appState = normalized;
+          updateMonthSelectOptions();
+          renderMonth(appState.currentMonthKey);
+          pushHistory('Importación JSON aplicada.');
+        } catch (error) {
+          window.alert('No se pudo leer el JSON.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    async function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      const leftPanelTitle = document.getElementById('left-panel-title');
+      const rightPanelTitle = document.getElementById('right-panel-title');
+
+      if (mainTitle) {
+        mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      }
+
+      if (leftPanelTitle) {
+        const titleText = config.left_panel_title || defaultConfig.left_panel_title;
+        leftPanelTitle.innerHTML = `
+          <span class="text-purple-400">›</span>
+          <span class="glow-text">${titleText}</span>
+          <span class="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent ml-2"></span>
+        `;
+      }
+
+      if (rightPanelTitle) {
+        const titleText = config.right_panel_title || defaultConfig.right_panel_title;
+        rightPanelTitle.innerHTML = `
+          <span class="text-cyan-400">›</span>
+          <span class="glow-text">${titleText}</span>
+          <span class="flex-1 h-px bg-gradient-to-r from-purple-400/50 to-transparent ml-2"></span>
+        `;
+      }
+
+      // Apply font family
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      document.querySelectorAll('.title-font').forEach(el => {
+        el.style.fontFamily = `${fontFamily}, sans-serif`;
+      });
+
+      // Apply font size scaling
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+      document.querySelectorAll('.title-font').forEach(el => {
+        if (el.tagName === 'H1') {
+          el.style.fontSize = `${baseFontSize * 3}px`;
+        } else if (el.tagName === 'H2') {
+          el.style.fontSize = `${baseFontSize * 1.25}px`;
+        }
+      });
+
+      // Apply colors
+      const primaryAccent = config.primary_accent || defaultConfig.primary_accent;
+      const secondaryAccent = config.secondary_accent || defaultConfig.secondary_accent;
+
+      document.body.style.setProperty('--primary-accent', primaryAccent);
+      document.body.style.setProperty('--secondary-accent', secondaryAccent);
+
+      renderMonth(appState.currentMonthKey);
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.primary_accent || defaultConfig.primary_accent,
+            set: (value) => { config.primary_accent = value; window.elementSdk.setConfig({ primary_accent: value }); }
+          },
+          {
+            get: () => config.secondary_accent || defaultConfig.secondary_accent,
+            set: (value) => { config.secondary_accent = value; window.elementSdk.setConfig({ secondary_accent: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['left_panel_title', config.left_panel_title || defaultConfig.left_panel_title],
+        ['right_panel_title', config.right_panel_title || defaultConfig.right_panel_title]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    } else {
+      onConfigChange(defaultConfig);
+    }
+
+    loadState();
+    updateMonthSelectOptions();
+    renderMonth(appState.currentMonthKey);
+    renderHistory();
+
+    const monthSelect = document.getElementById('month-select');
+    const addMonthBtn = document.getElementById('add-month-btn');
+    const cloneMonthBtn = document.getElementById('clone-month-btn');
+    const setRotationBtn = document.getElementById('set-rotation-btn');
+    const autoRotateBtn = document.getElementById('auto-rotate-btn');
+    const exportJsonBtn = document.getElementById('export-json-btn');
+    const exportCsvBtn = document.getElementById('export-csv-btn');
+    const importJsonBtn = document.getElementById('import-json-btn');
+    const importJsonInput = document.getElementById('import-json-input');
+    const viewFilter = document.getElementById('view-filter');
+    const personSearch = document.getElementById('person-search');
+    const printBtn = document.getElementById('print-btn');
+    const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+    if (viewFilter) {
+      viewFilter.value = appState.viewFilter;
+      viewFilter.addEventListener('change', (event) => {
+        appState.viewFilter = event.target.value;
+        renderMonth(appState.currentMonthKey);
+      });
+    }
+
+    if (personSearch) {
+      personSearch.value = appState.searchQuery;
+      personSearch.addEventListener('input', (event) => {
+        appState.searchQuery = event.target.value;
+        renderMonth(appState.currentMonthKey);
+      });
+    }
+
+    if (monthSelect) {
+      monthSelect.addEventListener('change', (event) => {
+        renderMonth(event.target.value);
+      });
+    }
+
+    if (addMonthBtn) {
+      addMonthBtn.addEventListener('click', addMonthFromPrompt);
+    }
+
+    if (cloneMonthBtn) {
+      cloneMonthBtn.addEventListener('click', cloneMonthFromCurrent);
+    }
+
+    if (setRotationBtn) {
+      setRotationBtn.addEventListener('click', setRotationPool);
+    }
+
+    if (autoRotateBtn) {
+      autoRotateBtn.addEventListener('click', applyAutoRotation);
+    }
+
+    if (exportJsonBtn) {
+      exportJsonBtn.addEventListener('click', exportJson);
+    }
+
+    if (exportCsvBtn) {
+      exportCsvBtn.addEventListener('click', exportCsv);
+    }
+
+    if (importJsonBtn && importJsonInput) {
+      importJsonBtn.addEventListener('click', () => importJsonInput.click());
+      importJsonInput.addEventListener('change', (event) => {
+        const file = event.target.files && event.target.files[0];
+        importJsonFile(file);
+        event.target.value = '';
+      });
+    }
+
+    if (printBtn) {
+      printBtn.addEventListener('click', () => window.print());
+    }
+
+    if (clearHistoryBtn) {
+      clearHistoryBtn.addEventListener('click', () => {
+        if (!window.confirm('¿Borrar historial local?')) {
+          return;
+        }
+        appState.history = [];
+        renderHistory();
+        saveState();
+      });
+    }
+
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('.edit-action');
+      if (!button) {
+        return;
+      }
+      const selector = `.editable-assignee[data-day="${button.dataset.day}"][data-index="${button.dataset.index}"][data-month="${button.dataset.month}"]`;
+      const target = document.querySelector(selector);
+      if (target) {
+        target.focus();
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(target);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (!event.target.classList || !event.target.classList.contains('editable-assignee')) {
+        return;
+      }
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        event.target.blur();
+      }
+    });
+
+    document.addEventListener('focusout', (event) => {
+      const target = event.target;
+      if (!target.classList || !target.classList.contains('editable-assignee')) {
+        return;
+      }
+      applyInlineEdit(target);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d3c143663713c4e',t:'MTc3MjA3MzYzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
