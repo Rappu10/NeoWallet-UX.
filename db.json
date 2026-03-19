@@ -1,0 +1,58 @@
+{
+  "pacientes": [
+    {
+      "id": 1,
+      "nombre": "Juan Pérez",
+      "edad": 45,
+      "curp": "PERJ790101",
+      "sangre": "O+"
+    },
+    {
+      "id": 2,
+      "nombre": "María García",
+      "edad": 30,
+      "curp": "GARM940202",
+      "sangre": "A-"
+    },
+    {
+      "nombre": "Francisco Cer.",
+      "edad": 23,
+      "curp": "CEDF100103HDGRA2A2",
+      "sangre": "O+",
+      "id": 3
+    }
+  ],
+  "medicos": [
+    {
+      "id": 1,
+      "nombre": "Dr. Torres",
+      "especialidad": "Cardiología"
+    },
+    {
+      "id": 2,
+      "nombre": "Dra. Rivas",
+      "especialidad": "Pediatría"
+    },
+    {
+      "id": 3,
+      "nombre": "Dr. Nutriales",
+      "especialidad": "Nutriologogía"
+    }
+  ],
+  "citas": [
+    {
+      "id": 1,
+      "pacienteId": 1,
+      "medicoId": 1,
+      "fecha": "2026-03-20",
+      "hora": "10:00"
+    },
+    {
+      "pacienteId": 2,
+      "medicoId": 2,
+      "fecha": "2026-03-21",
+      "hora": "05:00",
+      "id": 1773942097337
+    }
+  ]
+}
