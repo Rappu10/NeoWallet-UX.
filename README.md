@@ -1,33 +1,32 @@
-# NeoWallet: Optimización de UX y Rediseño de Registro 🚀
+# Sistema de Gestión Hospitalaria
 
-**Estudiante:** Francisco Cervantes
-**Materia:** Desarrollo de Interfaces / UX
-**Estado:** Finalizado ✅
+Este es un proyecto enfocado en el diseño y la mejora de la Experiencia de Usuario (UX) y Accesibilidad para la gestión de clínicas y centros de salud. 
 
----
+El sistema permite administrar información hospitalaria básica (pacientes y citas médicas) a través de una interfaz moderna, responsiva y accesible, construida con React y Ant Design.
 
-## Descripción del Proyecto
-Este proyecto es una simulación de un caso real de optimización de Experiencia de Usuario (UX) para una aplicación Fintech llamada **NeoWallet**. 
+## 🚀 Características Principales
 
-El objetivo fue diagnosticar por qué el **70% de los usuarios abandonaban el proceso de registro** y desarrollar una solución técnica para corregirlo.
+- **Dashboard Administrativo:** Visualización de KPIs y gráficas de carga hospitalaria en tiempo real.
+- **Gestión de Pacientes (CRUD):** Registro, lectura y eliminación de pacientes conectados a una base de datos simulada.
+- **Agenda de Citas Médicas:** Sistema relacional para asignar consultas entre pacientes y médicos.
+- **♿ Motor de Accesibilidad (Context API):** - Botón flotante para escalado dinámico de tipografía (aumento de texto).
+  - Cambio de tema global a modo de "Alto Contraste" para reducir la fatiga visual.
 
-## Metodología Aplicada
-Se utilizaron 4 métodos de investigación para fundamentar los cambios en el código:
-1. **Análisis de Embudo:** Para detectar el punto exacto de fuga.
-2. **Mapas de Calor:** Para identificar frustración en clics (Rage Clicks).
-3. **A/B Testing:** Comparación entre formulario monolítico vs. pasos.
-4. **Pruebas de Usabilidad:** Feedback cualitativo de usuarios reales.
+## 🛠️ Tecnologías Utilizadas
 
-## Sobre el Código (Cómo probarlo)
-El archivo `index.html` contiene una **Simulación Interactiva** que permite alternar entre el problema y la solución.
+- **Frontend:** React + Vite
+- **UI Framework:** Ant Design (AnTD) + @ant-design/plots
+- **Enrutamiento:** React Router Dom
+- **Peticiones HTTP:** Axios
+- **Backend / Base de Datos:** json-server (API REST simulada)
 
-- **Modo "Mal Diseño" (Default):** Muestra el formulario original con problemas de carga cognitiva y validación.
-- **Modo "Buen Diseño":** Muestra la solución implementada con:
-  - Arquitectura de Wizard (Pasos).
-  - Validación en tiempo real (Feedback inmediato).
-  - Barra de progreso visual.
+## ⚙️ Instrucciones de Instalación y Ejecución
 
-### Tecnologías
-- HTML5 Semántico
-- CSS3 (Animaciones y Layout)
-- JavaScript Vanilla (Manipulación del DOM y validación lógica)
+Para correr este proyecto en tu entorno local, necesitas tener [Node.js](https://nodejs.org/) instalado. Sigue estos pasos:
+
+### 1. Clonar el repositorio e instalar dependencias
+Abre tu terminal y ejecuta:
+```bash
+git clone <URL_DE_TU_REPOSITORIO>
+cd hospital-sistema
+npm install
