@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, InputNumber, Space, Card, message, Popconfirm } from 'antd';
+import { Table, Button, Modal, Form, Input, InputNumber, Card, message, Popconfirm } from 'antd';
 import { UserAddOutlined, DeleteOutlined, UserOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
@@ -97,6 +97,7 @@ const Pacientes = () => {
         columns={columns} 
         rowKey="id" 
         loading={loading}
+        scroll={{ x: 780 }}
         pagination={{ pageSize: 5 }}
       />
 
@@ -109,6 +110,8 @@ const Pacientes = () => {
         onOk={() => form.submit()}
         okText="Guardar"
         cancelText="Cancelar"
+        centered
+        width={640}
       >
         <Form form={form} layout="vertical" onFinish={handleAdd}>
           <Form.Item name="nombre" label="Nombre Completo" rules={[{ required: true, message: 'Ingresa el nombre' }]}>

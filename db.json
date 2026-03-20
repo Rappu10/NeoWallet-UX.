@@ -1,13 +1,6 @@
 {
   "pacientes": [
     {
-      "id": 1,
-      "nombre": "Juan Pérez",
-      "edad": 45,
-      "curp": "PERJ790101",
-      "sangre": "O+"
-    },
-    {
       "id": 2,
       "nombre": "María García",
       "edad": 30,
@@ -15,11 +8,11 @@
       "sangre": "A-"
     },
     {
-      "nombre": "Francisco Cer.",
-      "edad": 23,
-      "curp": "CEDF100103HDGRA2A2",
+      "nombre": "Hi",
+      "edad": 120,
+      "curp": "kjhdshgsdhjgfhjdgj",
       "sangre": "O+",
-      "id": 3
+      "id": 4
     }
   ],
   "medicos": [
@@ -41,18 +34,18 @@
   ],
   "citas": [
     {
-      "id": 1,
-      "pacienteId": 1,
-      "medicoId": 1,
-      "fecha": "2026-03-20",
-      "hora": "10:00"
-    },
-    {
       "pacienteId": 2,
       "medicoId": 2,
       "fecha": "2026-03-21",
       "hora": "05:00",
       "id": 1773942097337
+    },
+    {
+      "pacienteId": 4,
+      "medicoId": 3,
+      "fecha": "2027-02-24",
+      "hora": "05:00",
+      "id": 1773942097339
     }
   ]
 }

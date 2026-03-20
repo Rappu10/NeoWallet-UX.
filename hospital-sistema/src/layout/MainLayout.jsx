@@ -54,6 +54,7 @@ const HospitalLogo = ({ compact = false }) => (
 
 const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [isMobileNav, setIsMobileNav] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -86,8 +87,13 @@ const MainLayout = ({ children }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}
+        collapsedWidth={isMobileNav ? 0 : 80}
         breakpoint="lg"
         className="hospital-sider"
+        onBreakpoint={(broken) => {
+          setIsMobileNav(broken);
+          setCollapsed(broken);
+        }}
         style={{ background: 'linear-gradient(180deg, #0f172a 0%, #134e4a 100%)' }}
       >
         <div
@@ -111,7 +117,12 @@ const MainLayout = ({ children }) => {
           mode="inline"
           selectedKeys={[location.pathname]}
           items={menuItems}
-          onClick={({ key }) => navigate(key)}
+          onClick={({ key }) => {
+            navigate(key);
+            if (isMobileNav) {
+              setCollapsed(true);
+            }
+          }}
           style={{ background: 'transparent' }}
         />
       </Sider>
@@ -121,52 +132,30 @@ const MainLayout = ({ children }) => {
           style={{
             padding: '0 24px 0 0',
             background: colorBgContainer,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 16,
           }}
         >
           <Button
+            className="hospital-menu-toggle"
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{ fontSize: '16px', width: 64, height: 64 }}
           />
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1 }}>
-            <div
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: 12,
-                background: '#e6fffb',
-                display: 'grid',
-                placeItems: 'center',
-              }}
-            >
+          <div className="hospital-header-main">
+            <div className="hospital-header-brandmark">
               <MedicineBoxOutlined style={{ fontSize: 20, color: '#0f766e' }} />
             </div>
-            <div>
-              <h2 style={{ margin: 0, fontSize: 24 }}>Sistema de Gestion Hospitalaria</h2>
+            <div className="hospital-header-copy">
+              <h2 className="hospital-header-title">Sistema de Gestion Hospitalaria</h2>
             </div>
           </div>
-          <div
-            style={{
-              padding: '8px 14px',
-              borderRadius: 999,
-              background: '#ecfeff',
-              color: '#0f766e',
-              fontWeight: 600,
-              fontSize: 12,
-            }}
-          >
+          <div className="hospital-status-pill">
             Hospital activo
           </div>
         </Header>
         <Content
           className="hospital-content"
           style={{
-            margin: '24px 16px',
-            padding: 24,
             minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,

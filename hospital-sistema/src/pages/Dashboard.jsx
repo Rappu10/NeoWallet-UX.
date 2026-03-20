@@ -131,7 +131,9 @@ const Dashboard = () => {
       <Row gutter={[16, 16]} style={{ marginTop: '24px' }}>
         <Col xs={24} lg={12}>
           <Card title="Carga por Especialidad" className="glass-card surface-card">
-            <Column {...configGrafica} />
+            <div className="chart-shell">
+              <Column {...configGrafica} />
+            </div>
           </Card>
         </Col>
         <Col xs={24} lg={12}>
@@ -142,6 +144,7 @@ const Dashboard = () => {
               columns={columnsCitas} 
               pagination={false} 
               rowKey="id"
+              scroll={{ x: 640 }}
             />
           </Card>
         </Col>

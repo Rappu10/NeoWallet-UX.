@@ -57,6 +57,58 @@ body {
   color: #0f172a !important;
 }
 
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-content th,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-cell,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-cell-inner,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-time-panel-cell-inner,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-header,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-header button,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-time-panel-column > li {
+  color: #000 !important;
+}
+
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-cell-in-view,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-cell-in-view .ant-picker-cell-inner,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-time-panel-column > li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner,
+.accessibility-mode-normal .hospital-modal .ant-picker input,
+.accessibility-mode-normal .hospital-modal .ant-picker-suffix,
+.accessibility-mode-normal .hospital-modal .ant-picker-clear,
+.accessibility-mode-normal .hospital-modal .ant-select-selection-placeholder,
+.accessibility-mode-normal .hospital-modal .ant-select-arrow {
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-cell-disabled::before,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-cell-disabled .ant-picker-cell-inner,
+.accessibility-mode-normal .citas-datepicker-popup .ant-picker-time-panel-cell-disabled .ant-picker-time-panel-cell-inner,
+.accessibility-mode-normal .hospital-modal .ant-picker input::placeholder,
+.accessibility-mode-normal .hospital-modal .ant-select-selection-placeholder {
+  color: #000 !important;
+  opacity: 1 !important;
+}
+
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-content th,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-cell,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-cell-inner,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-cell-in-view,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-cell-in-view .ant-picker-cell-inner,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-time-panel-cell-inner,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-time-panel-column > li,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-header,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-header button,
+.accessibility-mode-high-contrast .hospital-modal .ant-picker input,
+.accessibility-mode-high-contrast .hospital-modal .ant-picker input::placeholder,
+.accessibility-mode-high-contrast .hospital-modal .ant-picker-suffix,
+.accessibility-mode-high-contrast .hospital-modal .ant-picker-clear,
+.accessibility-mode-high-contrast .hospital-modal .ant-select-selection-placeholder,
+.accessibility-mode-high-contrast .hospital-modal .ant-select-arrow,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-cell-disabled .ant-picker-cell-inner,
+.accessibility-mode-high-contrast .citas-datepicker-popup .ant-picker-time-panel-cell-disabled .ant-picker-time-panel-cell-inner {
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
 .accessibility-mode-normal .hospital-table .ant-table-thead > tr > th {
   color: #475569 !important;
 }
@@ -135,11 +187,57 @@ body {
   border-radius: 24px;
   backdrop-filter: blur(18px);
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .hospital-content {
   background: transparent !important;
-  padding: 0 !important;
+  padding: 24px !important;
+  margin: 24px 16px !important;
+}
+
+.hospital-menu-toggle {
+  flex: 0 0 auto;
+}
+
+.hospital-header-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.hospital-header-brandmark {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #e6fffb;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.hospital-header-copy {
+  min-width: 0;
+}
+
+.hospital-header-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.hospital-status-pill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #ecfeff;
+  color: #0f766e;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .page-shell {
@@ -369,6 +467,65 @@ body {
   backdrop-filter: blur(18px);
 }
 
+.hospital-modal .ant-modal {
+  max-width: min(720px, calc(100vw - 32px));
+}
+
+.hospital-modal .ant-modal-header {
+  padding-bottom: 8px;
+}
+
+.hospital-modal .ant-modal-body {
+  padding-top: 12px;
+}
+
+.hospital-modal .ant-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hospital-modal .ant-form-item {
+  margin-bottom: 20px;
+}
+
+.hospital-modal .ant-select-selector,
+.hospital-modal .ant-picker {
+  min-height: 54px;
+  border-radius: 20px !important;
+}
+
+.hospital-modal .ant-select-selection-search-input,
+.hospital-modal .ant-select-selection-placeholder,
+.hospital-modal .ant-select-selection-item,
+.hospital-modal .ant-picker input {
+  font-size: 16px;
+}
+
+.citas-datepicker-popup {
+  max-width: min(100vw - 32px, 680px);
+}
+
+.citas-datepicker-popup .ant-picker-panel-container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.citas-datepicker-popup .ant-picker-panels {
+  flex-wrap: wrap;
+}
+
+.citas-datepicker-popup .ant-picker-date-panel,
+.citas-datepicker-popup .ant-picker-time-panel {
+  flex: 1 1 280px;
+}
+
+.chart-shell {
+  width: 100%;
+  min-height: 320px;
+}
+
 @media (max-width: 960px) {
   .hero-panel {
     grid-template-columns: 1fr;
@@ -377,11 +534,54 @@ body {
   .hero-title {
     max-width: none;
   }
+
+  .hospital-header {
+    padding-right: 16px !important;
+  }
+
+  .hospital-content {
+    padding: 20px !important;
+    margin: 20px 12px !important;
+  }
+
+  .hospital-header-title {
+    font-size: 20px;
+  }
+
+  .hospital-status-pill {
+    display: none;
+  }
+
+  .hospital-modal .ant-modal-content {
+    border-radius: 20px;
+  }
+
+  .hospital-modal .ant-modal-body {
+    padding: 8px 0 0;
+  }
+
+  .citas-datepicker-popup .ant-picker-date-panel,
+  .citas-datepicker-popup .ant-picker-time-panel {
+    flex-basis: 100%;
+  }
 }
 
 @media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .hospital-sider {
+    position: fixed !important;
+    inset: 0 auto 0 0;
+    z-index: 1100;
+    height: 100vh;
+  }
+
   .hospital-header {
     margin: 12px 12px 0;
+    gap: 10px;
+    padding-right: 12px !important;
   }
 
   .hero-panel {
@@ -395,5 +595,148 @@ body {
 
   .hero-metric-wide {
     grid-column: auto;
+  }
+
+  .hero-title {
+    font-size: clamp(1.85rem, 8vw, 2.5rem);
+  }
+
+  .hero-copy {
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    align-items: flex-start;
+  }
+
+  .section-title strong {
+    display: block;
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  .hospital-header-main {
+    gap: 10px;
+  }
+
+  .hospital-header-title {
+    font-size: 17px;
+  }
+
+  .hospital-content {
+    border-radius: 0 !important;
+    padding: 16px !important;
+    margin: 16px 0 0 !important;
+  }
+
+  .page-shell {
+    gap: 18px;
+  }
+
+  .glass-card .ant-card-head {
+    padding: 0 16px;
+  }
+
+  .glass-card .ant-card-body {
+    padding: 16px;
+  }
+
+  .section-banner span {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hospital-table .ant-table-thead > tr > th,
+  .hospital-table .ant-table-tbody > tr > td {
+    white-space: nowrap;
+  }
+
+  .hospital-modal {
+    padding: 12px;
+  }
+
+  .hospital-modal .ant-modal {
+    max-width: calc(100vw - 24px);
+    margin: 0 auto;
+  }
+
+  .hospital-modal .ant-modal-content {
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .hospital-modal .ant-modal-header,
+  .hospital-modal .ant-modal-body,
+  .hospital-modal .ant-modal-footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .hospital-modal .ant-modal-title {
+    font-size: 1.75rem;
+    line-height: 1.1;
+    padding-right: 40px;
+  }
+
+  .hospital-modal .ant-form-item-label > label {
+    font-size: 15px;
+  }
+
+  .hospital-modal .ant-btn {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  .hospital-modal .ant-modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .citas-datepicker-popup {
+    max-width: calc(100vw - 24px);
+  }
+
+  .citas-datepicker-popup .ant-picker-panel-layout {
+    flex-direction: column;
+  }
+
+  .citas-datepicker-popup .ant-picker-date-panel,
+  .citas-datepicker-popup .ant-picker-time-panel {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .citas-datepicker-popup .ant-picker-content th,
+  .citas-datepicker-popup .ant-picker-content td,
+  .citas-datepicker-popup .ant-picker-time-panel-column > li {
+    font-size: 15px;
+  }
+
+  .chart-shell {
+    min-height: 260px;
+  }
+
+  .ant-float-btn-group {
+    right: 14px !important;
+    bottom: 14px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hospital-header-title {
+    font-size: 15px;
+  }
+
+  .hospital-menu-toggle.ant-btn {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .hospital-modal .ant-modal-title {
+    font-size: 1.45rem;
+  }
+
+  .glass-card .ant-card-head-title {
+    white-space: normal;
   }
 }

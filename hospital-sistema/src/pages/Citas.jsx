@@ -100,6 +100,7 @@ const Citas = () => {
         columns={columns} 
         rowKey="id" 
         loading={loading}
+        scroll={{ x: 720 }}
         pagination={{ pageSize: 5 }}
       />
 
@@ -111,6 +112,8 @@ const Citas = () => {
         onOk={() => form.submit()}
         okText="Guardar"
         cancelText="Cancelar"
+        centered
+        width={720}
       >
         <Form form={form} layout="vertical" onFinish={handleAddCita}>
           <Form.Item name="pacienteId" label="Seleccionar Paciente" rules={[{ required: true, message: 'Selecciona un paciente' }]}>
@@ -128,7 +131,13 @@ const Citas = () => {
             />
           </Form.Item>
           <Form.Item name="fecha" label="Fecha y Hora" rules={[{ required: true, message: 'Selecciona fecha y hora' }]}>
-            <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm" />
+            <DatePicker
+              showTime
+              style={{ width: '100%' }}
+              format="YYYY-MM-DD HH:mm"
+              popupClassName="citas-datepicker-popup"
+              getPopupContainer={(trigger) => trigger.parentElement}
+            />
           </Form.Item>
         </Form>
       </Modal>
